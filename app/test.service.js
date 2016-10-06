@@ -14,16 +14,50 @@ var TestService = (function () {
     function TestService(http) {
         this.http = http;
     }
-    TestService.prototype.getSomeData = function () {
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'BotConnector <key here>');
-        //var promise = new Promise(function(resolve,reject){
-        this.http.post('https://directline.botframework.com/api/conversations', {}, { headers: headers })
-            .map(function (res) { return res.json(); })
-            .subscribe(function (data) { return console.log(data); }, function (err) { return console.log(err); }, function () { return console.log('bot session initiated'); });
-        //  });
-        //return promise;
+    TestService.prototype.initiateConversation = function () {
+        if (!this.conversationSession) {
+            var headers = new http_1.Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('Authorization', 'BotConnector BfFGbHeVLfc.cwA.1-o.ZW0cJVt51JUDb2Nl4QAFINdi6EQ4Fnnuzwob7eeheLc');
+            var service = this;
+            this.conversationSession = new Promise(function (resolve, reject) {
+                service.http.post('https://directline.botframework.com/api/conversations', {}, { headers: headers })
+                    .map(function (res) { return res.json(); })
+                    .subscribe(function (data) { return resolve(data); }, function (err) { return reject(err); }, function () { return console.log('bot session initiated'); });
+            });
+        }
+        return this.conversationSession;
+    };
+    TestService.prototype.postMessage = function (message) {
+        var service = this;
+        var promise = new Promise(function (resolve, reject) {
+            service.initiateConversation().then(function (session) {
+                console.log('session');
+                console.log(session);
+                var headers = new http_1.Headers();
+                headers.append('Content-Type', 'application/json');
+                headers.append('Authorization', 'BotConnector BfFGbHeVLfc.cwA.1-o.ZW0cJVt51JUDb2Nl4QAFINdi6EQ4Fnnuzwob7eeheLc');
+                service.http.post('https://directline.botframework.com/api/conversations/' + session.conversationId + '/messages', JSON.stringify({ text: message }), { headers: headers })
+                    .subscribe(function (data) { return resolve({}); }, function (err) { return reject(err); }, function () { return console.log('bot session initiated'); });
+            });
+        });
+        return promise;
+    };
+    TestService.prototype.getMessages = function () {
+        var service = this;
+        var promise = new Promise(function (resolve, reject) {
+            service.initiateConversation().then(function (session) {
+                console.log('session');
+                console.log(session);
+                var headers = new http_1.Headers();
+                headers.append('Content-Type', 'application/json');
+                headers.append('Authorization', 'BotConnector BfFGbHeVLfc.cwA.1-o.ZW0cJVt51JUDb2Nl4QAFINdi6EQ4Fnnuzwob7eeheLc');
+                service.http.get('https://directline.botframework.com/api/conversations/' + session.conversationId + '/messages', { headers: headers })
+                    .map(function (res) { return res.json(); })
+                    .subscribe(function (data) { return resolve(data); }, function (err) { return reject(err); }, function () { return console.log('bot session initiated'); });
+            });
+        });
+        return promise;
     };
     TestService = __decorate([
         core_1.Injectable(), 

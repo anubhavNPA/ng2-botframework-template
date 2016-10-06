@@ -14,7 +14,15 @@ require('rxjs/Rx');
 var AppComponent = (function () {
     function AppComponent(testService) {
         this.testService = testService;
-        testService.getSomeData();
+        testService.postMessage('TEST').then(function (data) {
+            testService.getMessages().then(function (messages) {
+                console.log(messages);
+            });
+            console.log('data');
+            console.log(data);
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
     AppComponent = __decorate([
         core_1.Component({

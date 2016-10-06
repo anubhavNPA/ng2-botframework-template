@@ -10,6 +10,14 @@ import 'rxjs/Rx';
 export class AppComponent {
 
       constructor(private testService: TestService) {
-        testService.getSomeData();
+        testService.postMessage('TEST').then(function(data) {
+          testService.getMessages().then(function(messages) {
+              console.log(messages);
+          });
+console.log('data');
+console.log(data);
+        }).catch(function(error) {
+console.log(error);
+        });
     }
  } 
