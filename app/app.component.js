@@ -9,15 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var test_service_1 = require('./test.service');
+require('rxjs/Rx');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(testService) {
+        this.testService = testService;
+        testService.getSomeData();
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: '<h1>My First Angular App</h1>'
+            template: '<h1>My First Angular App</h1>',
+            providers: [test_service_1.TestService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [test_service_1.TestService])
     ], AppComponent);
     return AppComponent;
 }());
