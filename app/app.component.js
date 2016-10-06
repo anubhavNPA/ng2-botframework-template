@@ -9,28 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var test_service_1 = require('./test.service');
+var botframework_service_1 = require('./botframework.service');
 require('rxjs/Rx');
 var AppComponent = (function () {
+    //testService: TestService;
     function AppComponent(testService) {
         this.testService = testService;
-        testService.postMessage('TEST').then(function (data) {
-            testService.getMessages().then(function (messages) {
-                console.log(messages);
+        var component = this;
+        //  this.testService = testService;
+    }
+    AppComponent.prototype.refreshMessages = function () {
+        var component = this;
+        component.testService.getMessages().then(function (result) {
+            component.messages = result.messages;
+        });
+    };
+    AppComponent.prototype.postMessage = function () {
+        var component = this;
+        console.log('posted');
+        var messageToSend = component.messageToBot;
+        component.messageToBot = '';
+        component.testService.postMessage(messageToSend).then(function (data) {
+            component.testService.getMessages().then(function (result) {
+                component.messages = result.messages;
             });
             console.log('data');
             console.log(data);
         }).catch(function (error) {
             console.log(error);
         });
-    }
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: '<h1>My First Angular App</h1>',
-            providers: [test_service_1.TestService]
+            template: '<input [(ngModel)]="messageToBot" /><button (click)="postMessage()">Post</button><button (click)="refreshMessages()">Refresh</button><ul><li *ngFor="let message of messages">{{message.text}}</li></ul>',
+            providers: [botframework_service_1.BotFrameworkService]
         }), 
-        __metadata('design:paramtypes', [test_service_1.TestService])
+        __metadata('design:paramtypes', [botframework_service_1.BotFrameworkService])
     ], AppComponent);
     return AppComponent;
 }());

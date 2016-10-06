@@ -4,19 +4,20 @@ import { Http, Response, Headers } from '@angular/http';
 
 
 @Injectable()
-export class TestService {
+export class BotFrameworkService {
     constructor(private http: Http){
         
     }
-    botFrameworkDirectLineApiKey:string = '';
+    botFrameworkDirectLineApiKey:string = '<your direct line key>';
     conversationSession: any;
 
     initiateConversation() {
+var service = this;
 if (!this.conversationSession){
         var headers = new Headers();
         headers.append('Content-Type', 'application/json')
-        headers.append('Authorization','BotConnector ' + botFrameworkDirectLineApiKey);
-var service = this;
+        headers.append('Authorization','BotConnector ' + service.botFrameworkDirectLineApiKey);
+
 
         this.conversationSession = new Promise(function(resolve,reject){
 
@@ -44,7 +45,7 @@ var service = this;
 
         var headers = new Headers();
         headers.append('Content-Type', 'application/json')
-        headers.append('Authorization','BotConnector ' + botFrameworkDirectLineApiKey);
+        headers.append('Authorization','BotConnector ' + service.botFrameworkDirectLineApiKey);
 
             service.http.post('https://directline.botframework.com/api/conversations/' + session.conversationId + '/messages', 
             JSON.stringify({ text: message }) ,{ headers: headers })
@@ -71,7 +72,7 @@ var service = this;
 
         var headers = new Headers();
         headers.append('Content-Type', 'application/json')
-        headers.append('Authorization','BotConnector ' + botFrameworkDirectLineApiKey);
+        headers.append('Authorization','BotConnector ' + service.botFrameworkDirectLineApiKey);
 
             service.http.get('https://directline.botframework.com/api/conversations/' + session.conversationId + '/messages', 
            { headers: headers })

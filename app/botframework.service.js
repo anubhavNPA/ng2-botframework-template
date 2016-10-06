@@ -10,12 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var TestService = (function () {
-    function TestService(http) {
+var BotFrameworkService = (function () {
+    function BotFrameworkService(http) {
         this.http = http;
-        this.botFrameworkDirectLineApiKey = 'BfFGbHeVLfc.cwA.1-o.ZW0cJVt51JUDb2Nl4QAFINdi6EQ4Fnnuzwob7eeheLc';
+        this.botFrameworkDirectLineApiKey = '<your direct line key>';
     }
-    TestService.prototype.initiateConversation = function () {
+    BotFrameworkService.prototype.initiateConversation = function () {
         var service = this;
         if (!this.conversationSession) {
             var headers = new http_1.Headers();
@@ -29,7 +29,7 @@ var TestService = (function () {
         }
         return this.conversationSession;
     };
-    TestService.prototype.postMessage = function (message) {
+    BotFrameworkService.prototype.postMessage = function (message) {
         var service = this;
         var promise = new Promise(function (resolve, reject) {
             service.initiateConversation().then(function (session) {
@@ -44,7 +44,7 @@ var TestService = (function () {
         });
         return promise;
     };
-    TestService.prototype.getMessages = function () {
+    BotFrameworkService.prototype.getMessages = function () {
         var service = this;
         var promise = new Promise(function (resolve, reject) {
             service.initiateConversation().then(function (session) {
@@ -60,11 +60,11 @@ var TestService = (function () {
         });
         return promise;
     };
-    TestService = __decorate([
+    BotFrameworkService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], TestService);
-    return TestService;
+    ], BotFrameworkService);
+    return BotFrameworkService;
 }());
-exports.TestService = TestService;
-//# sourceMappingURL=test.service.js.map
+exports.BotFrameworkService = BotFrameworkService;
+//# sourceMappingURL=botframework.service.js.map
