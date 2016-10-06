@@ -12,11 +12,9 @@ var core_1 = require('@angular/core');
 var botframework_service_1 = require('./botframework.service');
 require('rxjs/Rx');
 var AppComponent = (function () {
-    //testService: TestService;
     function AppComponent(testService) {
         this.testService = testService;
         var component = this;
-        //  this.testService = testService;
     }
     AppComponent.prototype.refreshMessages = function () {
         var component = this;
@@ -26,15 +24,12 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.postMessage = function () {
         var component = this;
-        console.log('posted');
         var messageToSend = component.messageToBot;
         component.messageToBot = '';
         component.testService.postMessage(messageToSend).then(function (data) {
             component.testService.getMessages().then(function (result) {
                 component.messages = result.messages;
             });
-            console.log('data');
-            console.log(data);
         }).catch(function (error) {
             console.log(error);
         });

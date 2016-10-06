@@ -13,7 +13,7 @@ var http_1 = require('@angular/http');
 var BotFrameworkService = (function () {
     function BotFrameworkService(http) {
         this.http = http;
-        this.botFrameworkDirectLineApiKey = '<your direct line key>';
+        this.botFrameworkDirectLineApiKey = 'BfFGbHeVLfc.cwA.1-o.ZW0cJVt51JUDb2Nl4QAFINdi6EQ4Fnnuzwob7eeheLc';
     }
     BotFrameworkService.prototype.initiateConversation = function () {
         var service = this;
