@@ -1,9 +1,11 @@
 # ng2-botframework-template
-Yeoman template for Angular 2 &amp; Microsoft Bot Framework.
 
-![](img1.png)
+##Introduction
 
-----
+Sets up boilerplate Angular 2 application with connectivity to an existing Bot through a Direct Line Microsoft Bot Framework Channel.
+
+ ![](img2.png)
+
 
 ##Usage (one line)
 
@@ -18,8 +20,3 @@ To connect the app to your Bot, put your direct line key in app/botframework.ser
 4. **Run generator** ```yo ng2-botframework-template <appname>```.  
 5. **Start the app** ```cd <appname>; npm start;```
 
-##Introduction
-
-Sets up boilerplate Angular 2 application with connectivity to a Direct Line Bot Framework Channel.  
-
- ![](img2.png)
